@@ -12,7 +12,7 @@
 <form action="/note/{{ task_id }}/edit" method="post">
     <h3 style="text-align: center;">Изменение Заметки</h3>
     <p class="center"><input name="name" type="text" value="{{ name }}" />
-        <textarea name="text" placeholder="{{ text }}" rows="5"></textarea>
+        <textarea name="text" placeholder="{{ text }}"  rows="5">{{ text }}</textarea>
         <button>Сохранить</button></p>
 </form>
 

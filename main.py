@@ -12,7 +12,7 @@ def is_login():
     if session.get('auth', False) == True:
         return True
     else:
-        abort(403)
+        return False
 
 def db_session(func):
     def wrapper(*args, **kwargs):
@@ -60,6 +60,7 @@ def login(cur):
             if cur.execute(user, [request.form.get('login')]).fetchone() is not None:
                 session['auth'] = True
                 session['id'] = cur.execute(user, [request.form.get('login')]).fetchone()[0]
+                session['login'] = cur.execute(user, [request.form.get('login')]).fetchone()[1]
                 return redirect("/")
             else:
                 return "error"
@@ -78,7 +79,7 @@ def regi(cur):
             password = request.form.get('password')
             cur.execute(f"""
                 INSERT INTO users (login, password) VALUES
-                    ({login!r}, {password!r})""")
+                    (? , ?)""", (login, password))
             return redirect("/login")
         else:
             return "EROR! Такой пользователь уже есть!"
@@ -90,7 +91,6 @@ def regi(cur):
 @app.route('/add', methods=["POST", "GET"])
 @db_session
 def add(cur):
-    global reg2, id_n
     if is_login():
         if request.method == "POST":
             name = request.form["task_fun"]
@@ -101,8 +101,9 @@ def add(cur):
                    (?, ?, ?)"""
 
             cur.execute(query, [name, text, user_name])
-            id_n += 1
             return redirect("/")
+    else:
+        abort(403)
 
 @app.route('/logout')
 def logout():
@@ -114,36 +115,97 @@ def logout():
 @db_session
 def dell(cur, id):
     if is_login():
-        dell = f"""
-        DELETE FROM notes
-        WHERE id = {id} ;"""
-        cur.execute(dell)
-        return redirect('/')
+        login_query = f"SELECT id FROM users WHERE login = ?"
+        user_id = cur.execute(login_query, (session['login'],)).fetchone()
+
+        if not user_id:
+            abort(403)
+        else:
+            user_id = user_id[0]
+
+        iddd = f"SELECT user_id FROM notes WHERE id = ?"
+        note_id = cur.execute(iddd, (id,)).fetchone()
+
+        if not note_id:
+            abort(403)
+        else:
+            note_id = note_id[0]
+
+        if user_id == note_id:
+            dell = f"""
+                    DELETE FROM notes
+                    WHERE id = {id} ;"""
+            cur.execute(dell)
+            return redirect('/')
+        else:
+            abort(403)
+            return "Заметка другого пользователя!!!!"
 
 @app.route('/edit/<int:id>')
 @db_session
 def edit(cur, id):
     if is_login():
-        name = f"SELECT name FROM notes WHERE id = {id}"
-        text = f"SELECT text FROM notes WHERE id = {id}"
-        return render_template('edit2.html', task_id=id, name=cur.execute(name).fetchone()[0], text=cur.execute(text).fetchone()[0])
+        login_query = f"SELECT id FROM users WHERE login = ?"
+        user_id = cur.execute(login_query, (session['login'], )).fetchone()
+
+        if not user_id:
+            abort(403)
+        else:
+            user_id = user_id[0]
+
+        iddd = f"SELECT user_id FROM notes WHERE id = ?"
+        note_id = cur.execute(iddd, (id, )).fetchone()
+
+        if not note_id:
+            abort(403)
+        else:
+            note_id = note_id[0]
+
+        if user_id == note_id:
+            name = f"SELECT name FROM notes WHERE id = {id}"
+            text = f"SELECT text FROM notes WHERE id = {id}"
+            return render_template('edit2.html', task_id=id, name=cur.execute(name).fetchone()[0], text=cur.execute(text).fetchone()[0])
+        else:
+            abort(403)
+            return "Заметка другого пользователя!!!!"
 
 @app.route('/note/<int:id>/edit', methods=["POST", "GET"])
 @db_session
 def edit2(cur, id):
-    name = request.form.get('name')
-    text = request.form.get('text')
+    if is_login():
+        login_query = f"SELECT id FROM users WHERE login = ?"
+        user_id = cur.execute(login_query, (session['login'],)).fetchone()
 
-    upd_name = f"""
-    UPDATE notes
-    SET name = '{name}'
-    WHERE id = {id};"""
-    cur.execute(upd_name)
+        if not user_id:
+            abort(403)
+        else:
+            user_id = user_id[0]
 
-    upd_text = f"""
-    UPDATE notes
-    SET text = '{text}'
-    WHERE id = {id};"""
-    cur.execute(upd_text)
-    return redirect('/')
+        iddd = f"SELECT user_id FROM notes WHERE id = ?"
+        note_id = cur.execute(iddd, (id,)).fetchone()
+
+        if not note_id:
+            abort(403)
+        else:
+            note_id = note_id[0]
+
+        if user_id == note_id:
+            name = request.form.get('name')
+            text = request.form.get('text')
+
+            upd_name = f"""
+                    UPDATE notes
+                    SET name = '{name}'
+                    WHERE id = {id};"""
+            cur.execute(upd_name)
+
+            upd_text = f"""
+                    UPDATE notes
+                    SET text = '{text}'
+                    WHERE id = {id};"""
+            cur.execute(upd_text)
+            return redirect('/')
+        else:
+            abort(403)
+            return "Заметка другого пользователя!!!!"
 app.run(debug=True)
