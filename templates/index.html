@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Заметки</title>
+    <style>
+        .container{
+            display: flex;
+            box-sizing: border-box;
+    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="{{ url_for('static', filename='css/category.css')}}" rel="stylesheet">
+</head>
+<body>
+
+{% for topic_name in topic %}
+    {% if cur_id == topic_name[3] %}
+        <h3> {{topic_name[1]}}</h3>
+        <p class="p">{{ topic_name[2] }}</p>
+        <div class="container">
+             <a href="/logout">Выйти</a>
+            <a class="edit" href="/edit/{{topic_name[0]}}">Изменить</a> <a class="del" href="/del/{{topic_name[0]}}">Удалить</a>
+        </div>
+    {% endif %}
+{% endfor %}
+<form action="/add" method="post">
+    <h4>Хочешь больше фанфиков? Так добавь!</h4>
+    <label> Название: </label>
+    <input name="task_fun" type="text"/><textarea name="task_name" placeholder="Фанфик" rows="5"></textarea><button>Добавить</button>
+</form>
+</body>
+</html>

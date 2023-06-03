@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+.section-title{
+    font-size: 50px;
+    text-align: center;
+    margin-bottom: 30px;
+}
+.content{
+    margin-top: 100px;
+    padding: 20px;
+}
+.nav-menu{
+    position: fixed;
+    top: 0;
+    height: 100px;
+    width: 100%;
+    background-color: #121212;
+    padding: 20px;
+    z-index: 20;
+}
+.my{
+    display: inline-block;
+    font-size: 25px;
+    margin-left: 25px;
+    text-decoration: none;
+    color: white;
+    transition: 0.3s;
+    line-height: 50px;
+}
+.my:hover{
+    color: #FFC997;
+    transform: scale(1.2);
+}
+.nav-container{
+    float:right;
+}
+.main-section{
+    height: 100vh;
+    background: linear-gradient(#DB7E7E, #FFC997);
+}
+.main-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    width: fit-content;
+    z-index: 10;
+}
+.main-content-text{
+    font-size: 100px;
+    color: white;
+    text-shadow: 10px 10px 0 #E06161;
+}
+.main-content-btn{
+    display: block;
+    width: 300px;
+    height: 80px;
+    margin: 15px auto;
+    border-radius: 50px;
+    box-shadow: 10px 10px 0 #E06161;
+    text-decoration: none;
+    text-align: center;
+    font-weight: 600;
+    color: black;
+    font-size: 20px;
+    line-height: 80px;
+    background-color: white;
+}
+.main-background{
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.circle1 {
+    position: absolute;
+    top:-100px;
+    left: -50px;
+    animation: rotate-move 10s linear 0s infinite normal;
+}
+.circle2 {
+    position: absolute;
+    top:-40px;
+    right: -40px;
+    animation: move-left-down 10s linear 0s infinite;
+}
+.circle3 {
+    position: absolute;
+    bottom:-30px;
+    left: -50px;
+    animation:move-up-left 8s linear 0s infinite;
+}
+.circle-bordered {
+    position: absolute;
+    bottom:-30px;
+    left: 250px;
+    animation: move-right 15s linear 0s infinite;
+} 
+        
+.circle-dashed-border {
+    position: absolute;
+    bottom:-180px;
+    right: -100px;
+    animation: rotation 10s linear 0s infinite;
+}
+.triangle {
+    position: absolute;
+    top:20%;
+    left: 40%;
+    animation: move-right 25s linear 0s infinite normal;
+}
+.octagon {
+    position: absolute;
+    top:65%;
+    left: 50%;
+    animation: rotate-move 10s linear 0s infinite alternate-reverse;
+}
+
+
+@keyframes move-up-left{
+    0%{
+        transform: translate(0,0);
+    }
+    50%{
+        transform: translate(40px, 80px);
+    }
+    100%{
+        transform: translate(0,0);
+    }
+}
+@keyframes rotation{
+    0%{
+        transform: rotate(0deg);
+    }
+    100%{
+        transform: rotate(359deg);
+    }
+}
+@keyframes move-right{
+    0%{
+        transform: translateX(0);
+    }
+    50%{
+        transform: translateX(230%);
+    }
+    100%{
+        transform: translateX(0);
+    }
+}
+@keyframes rotate-move{
+    0%{
+        transform: translate(0,0) rotate(0deg);
+    }
+    50%{
+        transform: translate(80px, 200px) rotate(180deg);
+    }
+    100%{
+        transform: translate(0,0) rotate(359deg);
+    }
+}
+@keyframes move-left-down{
+    0%{
+        transform: translate(0,0) rotate(0deg);
+    }
+    50%{
+        transform: translate(-180px, 200px) rotate(180deg);
+    }
+    100%{
+        transform: translate(0,0) rotate(359deg);
+    }
+}

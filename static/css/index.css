@@ -1,0 +1,80 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.container{
+    width: 1000px;
+    margin: 0 auto;
+}
+.container_c{
+    width: 1000px;
+    margin: 0 auto;
+    padding: 15px;
+}
+.doing{
+    background: linear-gradient(7deg, #DB7E7E 18.07%, #FFC997 70%, #FFFFFF 70%);
+}
+.doing-left{
+    display: inline-block;
+    width: 45%;
+    vertical-align: top;
+}
+.doing-right{
+    display: inline-block;
+    width: 45%;
+    height: 600px;
+}
+.doing-right img{
+    height: 100%;
+    margin: 50px 0 0 20px;
+    width: 500px;
+}
+.doing-title{
+    margin-bottom: 30px;
+    font-size: 50px;
+}
+.doing-text{
+    background: white;
+    padding: 30px;
+    border-radius: 30px;
+    box-shadow: 10px 10px 0 #E06161;
+    font-size: 30px;
+}
+.border-top{
+    margin: 0;
+    padding: 0;
+}
+.fl{
+    display: flex;
+    margin-left: 150px;
+    position: relative;
+    bottom: 10px;
+}
+.mon{
+    margin-right: 70px;
+    transform: scale(1.5);
+}
+.tue{
+    margin-right: 70px;
+    transform: scale(1.5);
+}
+.wed{
+    margin-right: 70px;
+    transform: scale(1.5);
+}
+.tho{
+    margin-right: 70px;
+    transform: scale(1.5);
+}
+.fri{
+    margin-right: 70px;
+    transform: scale(1.5);
+}
+.sutr{
+    margin-right: 70px;
+    transform: scale(1.5);
+}
+.sun{
+    margin-right: 70px;
+    transform: scale(1.5);
+}
